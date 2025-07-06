@@ -30,7 +30,10 @@ export async function callDeepSeekAPI(prompt) {
       }
     );
 
-    return response.data.choices[0].message.content;
+    return response.data.choices[0].message.content
+      .replace(/\\n/g, "\n")
+      .replace(/\\\\/g, "\\")
+      .trim();
   } catch (error) {
     console.error(
       "OpenRouter API error:",

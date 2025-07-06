@@ -29,7 +29,9 @@ export async function callOpenAI(prompt) {
       }
     );
 
-    return response.data.choices[0].message.content;
+    return response.data.choices[0].message.content.replace(/\\n/g, "\n")
+    .replace(/\\\\/g, "\\")
+    .trim();
 
   } catch (error) {
     console.error("OpenAI API error:", error?.response?.data || error.message);
