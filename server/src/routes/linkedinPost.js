@@ -3,6 +3,6 @@ const router = express.Router();
 const { generateLinkedInPost } = require("../controller/linkedinPost");
 
 
-router.get("/data", generateLinkedInPost);
+router.post("/data", generateLinkedInPost);
 
 module.exports = router;
