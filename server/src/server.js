@@ -5,7 +5,7 @@ const port = process.env.PORT || 3000;
 
 
 app.use('/api/linkedin', linkedinPostRouter);
-app.use('isActive', (req, res) => {
+app.get('/isActive', (req, res) => {
   res.status(200).json({ message: 'Server is active' });
 });
 
