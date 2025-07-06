@@ -29,7 +29,8 @@ export async function callDeepSeek(prompt) {
       }
     );
 
-    return response.data.choices[0].message.content
+    return response.data.choices[0].message.content.replace(/\\n/g, "\n")
+    .replace(/\\\\/g, "\\")
     .replace(/\*/g, "")
     .trim();
 
