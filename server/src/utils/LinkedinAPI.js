@@ -7,7 +7,7 @@ export async function createTextPost(text, accessToken) {
     const response = await axios.post(
       LINKEDIN_API_URL,
       {
-        author: "urn:li:person:c_rm1hm3x-",
+        author: `urn:li:person:${process.env.LINKEDIN_PERSON_ID}`,
         lifecycleState: "PUBLISHED",
         specificContent: {
           "com.linkedin.ugc.ShareContent": {
