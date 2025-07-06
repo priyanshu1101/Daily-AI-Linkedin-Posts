@@ -5,7 +5,7 @@ const { callOpenAI } = require("../utils/OpenAI");
 
 const getGeneratedPost = async () => {
   const prompt = process.env.PROMPT.trim();
-  const response = await callOpenAI(prompt);
+  const response = await callDeepSeek(prompt);
   if(!response || response.length === 0) {
     throw new Error("Failed to generate post content");
   }
