@@ -1,3 +1,4 @@
+const { createPost } = require("../../models/linkedinPostModel.js");
 const { callDeepSeek } = require("../utils/Deepseek");
 const { getNewTopic } = require("../utils/getNewTopic");
 const { createTextPost } = require("../utils/LinkedinAPI");
@@ -10,7 +11,7 @@ const getGeneratedPost = async () => {
   const startDate = dayjs(START_DATE);
   const dayNumber = today.diff(startDate, "day") + 1;
   const prompt = process.env.PROMPT.trim();
-  const newTopic = getNewTopic();
+  const newTopic = await getNewTopic();
   const fullPrompt = `Generate a LinkedIn post ABOUT ${newTopic} EXCLUSIVELY. Follow these rules: ${prompt}`;
   const response = await callDeepSeek(fullPrompt);
   if (!response || response.length === 0) {
@@ -23,6 +24,18 @@ const getGeneratedPost = async () => {
     finalLinkedInPost,
     process.env.LINKEDIN_ACCESS_TOKEN
   );
+  
+  if (!post || !post.id) {
+    throw new Error("Failed to create LinkedIn post");
+  }
+
+  const linkedinPostData = {
+    topic: newTopic,
+    content: finalLinkedInPost,
+    postdate: new Date(),
+    urn: post?.id,
+  }
+  await createPost(linkedinPostData);
   return post;
 };
 

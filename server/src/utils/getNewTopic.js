@@ -1,3 +1,5 @@
+import { getTopicsUsed } from "../../models/linkedinPostModel.js";
+
 const techTopics = [
   "Artificial Intelligence in Healthcare",
   "Edge AI vs Cloud AI",
@@ -796,7 +798,14 @@ const techTopics = [
 ];
 
 
-export const getNewTopic = () => {
-    const randomIndex = Math.floor(Math.random() * techTopics.length);
-    return techTopics[randomIndex];
-}
+export const getNewTopic = async () => {
+  const usedTopics = await getTopicsUsed();
+  const availableTopics = techTopics.filter(
+    (topic) => !usedTopics.includes(topic)
+  );
+  if (availableTopics.length === 0) {
+    throw new Error("No available topics left to choose from");
+  }
+  const randomIndex = Math.floor(Math.random() * availableTopics.length);
+  return availableTopics[randomIndex];
+};
