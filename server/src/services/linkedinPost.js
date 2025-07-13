@@ -18,7 +18,7 @@ const getGeneratedPost = async () => {
     throw new Error("Failed to generate post content");
   }
 
-  const finalLinkedInPost = `👋 Daily Dose of AI — Day ${dayNumber} \n ✨ Topic : ${newTopic}\n\n${response}`;
+  const finalLinkedInPost = `👋 Daily Dose of AI — Day ${dayNumber} \n✨ Topic : ${newTopic}\n\n${response}`;
 
   const post = await createTextPost(
     finalLinkedInPost,
